@@ -1,6 +1,13 @@
 # README
 
-To install git hooks for Studytube Angular app add `postinstall` script to the app's `package.json`:
+To install git hooks for Studytube Angular app:
+
+1. Add `ng-git-hooks` to the app dev dependencies
+```
+npm install --save-dev git+ssh://git@github.com:StudyTube/ng-git-hooks.git
+```
+
+2. Update `postinstall` script in the app's `package.json`
 
 ```
 "scripts": {
