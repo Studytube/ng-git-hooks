@@ -1,7 +1,7 @@
 #!/bin/bash
 
 [[ -z "$GIT_DIR" ]] && GIT_DIR=".";
-CHANGES=`git status --porcelain`;
+CHANGES=$(git status --porcelain);
 if [[ ! -z "$CHANGES" ]];
 then
   echo "==> Stash local changes";
