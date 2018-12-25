@@ -8,8 +8,10 @@ then
   git stash --quiet -u;
 fi;
 
-echo "==> Check en.json for changes";
-node ./node_modules/crowdin-helper/crowdin-helper.js pre-push
+if [ -f "./node_modules/crowdin-helper/crowdin-helper.js" ]; then
+  echo "==> Check en.json for changes";
+  node ./node_modules/crowdin-helper/crowdin-helper.js pre-push
+fi
 
 echo "==> Check TSLint and AOT errors";
 npm run lint && ng build --aot && echo -e "$All fine!${NC}"
