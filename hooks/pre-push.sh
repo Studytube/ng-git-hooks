@@ -13,8 +13,8 @@ if [ -f "./node_modules/crowdin-helper/crowdin-helper.js" ]; then
   node ./node_modules/crowdin-helper/crowdin-helper.js pre-push
 fi
 
-echo "==> Check TSLint and AOT errors";
-npm run lint && ng build --aot && echo -e "$All fine!${NC}"
+echo "==> Check TSLint errors";
+npm run lint && echo -e "$All fine!${NC}"
 RESULT=$?;
 if [[ ! -z "$CHANGES" ]];
 then
