@@ -8,9 +8,9 @@ then
   git stash --quiet -u;
 fi;
 
-if [ -f "./node_modules/crowdin-helper/crowdin-helper.js" ]; then
+if [[ $(npm run | grep "^  crowdin-pre-push$" | wc -l) > 0 ]]; then
   echo "==> Check en.json for changes";
-  node ./node_modules/crowdin-helper/crowdin-helper.js pre-push
+  npm run crowdin-pre-push
 fi
 
 echo "==> Check TSLint errors";
