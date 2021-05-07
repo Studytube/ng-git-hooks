@@ -13,13 +13,10 @@ if [[ $(npm run | grep "^  crowdin-pre-push$" | wc -l) > 0 ]]; then
   npm run crowdin-pre-push
 fi
 
-echo "==> Check TSLint errors";
-npm run lint && echo -e "$All fine!${NC}"
-RESULT=$?;
 if [[ ! -z "$CHANGES" ]];
 then
   echo "==> Apply stashed local changes";
   git stash pop --quiet;
 fi;
 
-exit $RESULT;
+exit 0;
