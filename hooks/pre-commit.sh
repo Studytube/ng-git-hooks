@@ -7,8 +7,10 @@ NC='\033[0m'
 
 tsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.ts" | tr '\n' ' ')
 htmlfiles=$(git diff --cached --name-only --diff-filter=ACM "*.html" | tr '\n' ' ')
-filestolint=$(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|ts|html)$')
 filestoprettify="$tsfiles $htmlfiles"
+
+# || true prevents grep from exit when no matches
+filestolint=$(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|ts|html)$' || true)
 
 if [ -n "$tsfiles" ]; then
   echo "==> Sort imports in .ts files"
