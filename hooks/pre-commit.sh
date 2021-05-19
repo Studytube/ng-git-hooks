@@ -10,7 +10,11 @@ htmlfiles=$(git diff --cached --name-only --diff-filter=ACM "*.html" | tr '\n' '
 filestoprettify="$tsfiles $htmlfiles"
 
 # || true prevents grep from exit when no matches
-filestolint=$(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|ts|html)$' || true)
+#
+# TODO: Add *.html after migrating to eslint.
+# (on TSLint it leads to "is not included in project" error in some cases)
+#
+filestolint=$(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|ts)$' || true)
 
 if [ -n "$tsfiles" ]; then
   echo "==> Sort imports in .ts files"
