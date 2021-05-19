@@ -1,6 +1,6 @@
 {
   "name": "ng-git-hooks",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Storage for git hooks used in Studytube's Angular apps.",
   "author": "",
   "license": "ISC"
