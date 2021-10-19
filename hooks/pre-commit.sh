@@ -17,8 +17,9 @@ filestoprettify="$tsfiles $htmlfiles"
 # TODO: Add *.html after migrating to eslint.
 # (on TSLint it leads to "is not included in project" error in some cases)
 #
-scriptstolint=$(git diff --cached --name-only --diff-filter=d | grep -E '\.(js|ts)$' || true)
-stylestolint=$(git diff --cached --name-only --diff-filter=d | grep -E '\.(scss|css)$' || true)
+appScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^(src|projects)\/\S*\.(ts|js)$' || true)
+e2eScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^e2e\/\S*\.(ts|js)$' || true)
+stylesToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '\.(scss|css)$' || true)
 
 # TODO: Ideally, we want to lint only staged changes
 #  so that we don't add any random changes that haven't been staged before linting starts
@@ -35,22 +36,26 @@ if [ -n "$tsfiles" ]; then
   echo "==> Staging formatted .ts, .html files"
   echo "$filestoprettify" | xargs git add
 
-  echo "==> Checking TSLint errors in staged files";
-  echo "$scriptstolint" | xargs node_modules/tslint/bin/tslint --project tsconfig.json
-  printf "${GREEN}🔨️ Scripts and templates are fine!${NC}\n\n"
+  echo "==> Checking TSLint errors in app's staged files";
+  echo "$appScriptsToLint" | xargs node_modules/tslint/bin/tslint --project tsconfig.json
+  printf "${GREEN}🔨️ App's scripts and templates are fine!${NC}\n\n"
+
+  echo "==> Checking TSLint errors in e2e staged files";
+    echo "$e2eScriptsToLint" | xargs node_modules/tslint/bin/tslint --project ./e2e/tsconfig.json
+    printf "${GREEN}🔨️ E2e scripts are fine!${NC}\n\n"
 fi;
 
-if [ -f "$STYLELINT_CONFIG" ] && [ -n "$stylestolint" ]; then
+if [ -f "$STYLELINT_CONFIG" ] && [ -n "$stylesToLint" ]; then
   echo "==> Checking Stylelint errors in staged files";
-  echo "$stylestolint" | xargs ./node_modules/.bin/stylelint --fix
+  echo "$stylesToLint" | xargs ./node_modules/.bin/stylelint --fix
 
   echo "==> Staging formatted .scss, .css files"
-  echo "$stylestolint" | xargs git add
+  echo "$stylesToLint" | xargs git add
 
   printf "${GREEN}💅 Styles are fine!${NC}\n\n"
 fi;
 
-if [ -n "$tsfiles" ] || [ -n "$stylestolint" ]; then
+if [ -n "$tsfiles" ] || [ -n "$stylesToLint" ]; then
   printf "${GREEN}===== ✅ Linting passed. Well done!👏🥇 =====${NC}\n\n"
 fi;
 
