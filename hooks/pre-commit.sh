@@ -35,14 +35,18 @@ if [ -n "$tsfiles" ]; then
 
   echo "==> Staging formatted .ts, .html files"
   echo "$filestoprettify" | xargs git add
+fi;
 
+if [ -n "$appScriptsToLint" ]; then
   echo "==> Checking TSLint errors in app's staged files";
   echo "$appScriptsToLint" | xargs node_modules/tslint/bin/tslint --project tsconfig.json
   printf "${GREEN}🔨️ App's scripts and templates are fine!${NC}\n\n"
+fi;
 
+if [ -n "$e2eScriptsToLint" ]; then
   echo "==> Checking TSLint errors in e2e staged files";
-    echo "$e2eScriptsToLint" | xargs node_modules/tslint/bin/tslint --project ./e2e/tsconfig.json
-    printf "${GREEN}🔨️ E2e scripts are fine!${NC}\n\n"
+  echo "$e2eScriptsToLint" | xargs node_modules/tslint/bin/tslint --project ./e2e/tsconfig.json
+  printf "${GREEN}🔨️ E2e scripts are fine!${NC}\n\n"
 fi;
 
 if [ -f "$STYLELINT_CONFIG" ] && [ -n "$stylesToLint" ]; then
