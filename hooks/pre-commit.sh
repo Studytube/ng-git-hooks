@@ -17,8 +17,8 @@ filestoprettify="$tsfiles $htmlfiles"
 # TODO: Add *.html after migrating to eslint.
 # (on TSLint it leads to "is not included in project" error in some cases)
 #
-appScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^(src|projects)\/\S*\.(ts|js)$' || true)
-e2eScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^e2e\/\S*\.(ts|js)$' || true)
+appScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^(src|projects)\/\S*\.ts$' || true)
+e2eScriptsToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '^e2e\/\S*\.ts$' || true)
 stylesToLint=$(git diff --cached --name-only --diff-filter=d | grep -E '\.(scss|css)$' || true)
 
 # TODO: Ideally, we want to lint only staged changes
