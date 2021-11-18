@@ -7,6 +7,25 @@ NC='\033[0m'
 
 STYLELINT_CONFIG=.stylelintrc
 
+# Academy monorepo specific: ====================================
+CUSTOM_SCSS_VARS_LINT=utils/custom-scss-vars-lint/custom-scss-vars-lint.js
+
+for LXP_PROJECT in academy player
+do
+  PROJECT_PATH=projects/${LXP_PROJECT}
+
+  if [ -f "$CUSTOM_SCSS_VARS_LINT" ] && \
+     [ -d "$PROJECT_PATH" ] && \
+     [ -n "$(git diff --cached --name-only $PROJECT_PATH)" ]
+  then
+    echo "==> Checking custom SCSS variables usage in $PROJECT_PATH";
+    node $CUSTOM_SCSS_VARS_LINT $LXP_PROJECT
+
+    printf "${GREEN}💅 Custom SCSS vars in $LXP_PROJECT are fine!${NC}\n\n"
+  fi;
+done
+# end of Academy monorepo specific: =============================
+
 tsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.ts" | tr '\n' ' ')
 htmlfiles=$(git diff --cached --name-only --diff-filter=ACM "*.html" | tr '\n' ' ')
 
@@ -47,6 +66,13 @@ if [ -n "$e2eScriptsToLint" ]; then
   echo "==> Checking TSLint errors in e2e staged files";
   echo "$e2eScriptsToLint" | xargs node_modules/tslint/bin/tslint --project ./e2e/tsconfig.json
   printf "${GREEN}🔨️ E2e scripts are fine!${NC}\n\n"
+fi;
+
+if [ -f "$CUSTOM_SCSS_VARS_LINT" ] && [ -d "$ACADEMY_PATH" ]  && [ -n "$(git diff --cached --name-only $ACADEMY_PATH)" ]; then
+  echo "==> Checking custom SCSS variables usage in $ACADEMY_PATH";
+  node utils/custom-scss-vars-lint/custom-scss-vars-lint.js academy
+
+  printf "${GREEN}💅 Custom SCSS vars in Academy are fine!${NC}\n\n"
 fi;
 
 if [ -f "$STYLELINT_CONFIG" ] && [ -n "$stylesToLint" ]; then
