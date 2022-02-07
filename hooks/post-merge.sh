@@ -9,3 +9,5 @@ check_file() {
 
 echo "==> Check package.json for changes and reinstall packages when necessary"
 check_file "package.json" "npm install && npm prune"
+
+exit 0
