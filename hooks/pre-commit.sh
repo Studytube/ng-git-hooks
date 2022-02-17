@@ -5,7 +5,7 @@ set -e    # exit on any error
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-STYLELINT_CONFIG=.stylelintrc
+STYLELINT_CONFIG=stylelint.config.js
 
 # Academy monorepo specific: ====================================
 CUSTOM_SCSS_VARS_LINT=utils/custom-scss-vars-lint/custom-scss-vars-lint.js
