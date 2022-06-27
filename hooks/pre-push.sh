@@ -8,11 +8,6 @@ if [ -n "$CHANGES" ]; then
   git stash --quiet -u
 fi
 
-if [ -n "$(npm run | grep '^ *crowdin-pre-push$')" ]; then
-  echo "==> Check en.json for changes"
-  npm run crowdin-pre-push
-fi
-
 if [ -n "$CHANGES" ]; then
   echo "==> Apply stashed local changes"
   git stash pop --quiet
