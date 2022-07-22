@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 if [ -d .git ]; then
-  for hook in pre-push pre-commit post-merge; do
+  for hook in pre-push pre-commit post-merge commit-msg; do
     rm -f "./.git/hooks/${hook}"
     cp "./node_modules/ng-git-hooks/hooks/${hook}.sh" "./.git/hooks/${hook}"
   done
