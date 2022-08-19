@@ -77,7 +77,7 @@ fi;
 
 if [ -f "$STYLELINT_CONFIG" ] && [ -n "$stylesToLint" ]; then
   echo "==> Checking Stylelint errors in staged files";
-  echo "$stylesToLint" | xargs ./node_modules/.bin/stylelint --fix
+  echo "$stylesToLint" | xargs ./node_modules/.bin/stylelint --fix --rdd
 
   echo "==> Staging formatted .scss, .css files"
   echo "$stylesToLint" | xargs git add
